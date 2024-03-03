@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang User</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/fonts/fontawesome-free-6.5.1-web/fontawesome-free-6.5.1-web/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/grid.css">
+    <link rel="shortcut icon" href="https://portal.ptit.edu.vn/giaovu/wp-content/uploads/2016/05/favicon.png">
+    <link rel="stylesheet" href="../../assets/css/trang-user.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="grid wide">
+                <div class="row">
+                    <nav class="header__navbar">
+                        <a class = "header__logo" href="">
+                            <img src="../../assets/images/LOGO_PTIT.jpg" alt="" class="header__logo-icon">
+                        </a>
+                        <div class="header__navbar-search">
+                            <div class="header__search-input-wrap">
+                                <input type="text" class="header__search-input" id = "searchInput" placeholder="Tìm kiếm nội dung">
+                                <div class="header__search-history">
+                                    <h3 class="header__search-history-heading">
+                                        Lịch sử tìm kiếm
+                                    </h3>
+                                    <ul class="header__search-history-list">
+                                        <a href = "" class="header__search-history-item">Thi giữa kì</a>
+                                        <a href = "" class="header__search-history-item">Thi cuối kì</a>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button onclick="searchExam()" class="search__btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                        <select class = "header__navbar-filter" id="statusFilter">
+                            <option value="all">Tất cả</option>
+                            <option value="accessible">Truy cập tự do</option>
+                            <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                        </select>
+                        <ul class="header__navbar-list">
+                            <li class="header__navbar-item"> 
+                                <a href="" class="header__navbar-item-link">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    Trợ giúp
+                                </a>
+                            </li> 
+                            <div class="header-right">
+                                <div class="avatar" id="avatar">
+                                    <!-- Avatar icon or image -->
+                                    <img src="/assets/images/LOGO_PTIT.jpg" alt="">
+                                    <div class="dropdown-content" id="dropdownContent">
+                                        <!-- Các dòng chữ -->
+                                        <a href="#">Cập nhập thông tin sinh viên</a>
+                                        <a href="#">Thay đổi mật khẩu</a>
+                                        <a href="../../assets/features/dang-nhap.html">Đăng xuất</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="grid wide">
+                <div class="row">
+                    <div class="category l-2">
+                        <div class="category__option">
+                            <h3 id = "exam-list" class="category__option-heading">
+                                <i class="fa-solid fa-list"></i>
+                                Danh Sách Kỳ Thi
+                            </h3>
+                            <ul id = "list-exam" class="category__option-list" id = "list-exam" style = "display: none">
+                                <a href="../../assets/features/trang-bai-thi.html" value = "scheduled" class="category__option-item category__option-item--active">
+                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
+                                    <p>Thời gian: 90 phút</p>
+                                    <p>Loại: Có thời gian cụ thể</p>
+                                </a>
+                                <a href="" value = "accessible" class="category__option-item">
+                                    <h4>Luyện Tập Môn Công Nghệ Phầm Mềm</h4>
+                                    <p>Thời gian: 90 phút</p>
+                                    <p>Loại: Truy cập tự do</p>
+                                </a>
+                                <a href="" value = "scheduled" class="category__option-item">
+                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
+                                    <p>Thời gian: 90 phút</p>
+                                    <p>Loại: Có thời gian cụ thể</p>
+                                </a>
+                                <a href="" value = "scheduled" class="category__option-item">
+                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
+                                    <p>Thời gian: 90 phút</p>
+                                    <p>Loại: Có thời gian cụ thể</p>
+                                </a>
+                                <a href="" value = "accessible" class="category__option-item">
+                                    <h4>Luyện tập Môn Trí Truệ Nhân Tạo</h4>
+                                    <p>Thời gian: 90 phút</p>
+                                    <p>Loại: Truy cập tự do</p>
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+
+        </div>
+    </div>
+    <script>
+        var examList = document.getElementById('exam-list');
+
+        // Thêm sự kiện click cho phần tử "Danh sách kỳ thi"
+        examList.addEventListener('click', function() {
+            // Lấy danh sách các kỳ thi
+            var examListItems = document.getElementById('list-exam');
+            
+            // Kiểm tra trạng thái hiển thị của danh sách kỳ thi
+            if (examListItems.style.display == 'none') {
+                // Nếu đang ẩn, hiển thị danh sách
+                examListItems.style.display = 'block';
+            } else if(examListItems.style.display = 'block') {
+                // Nếu đang hiển thị, ẩn danh sách
+                examListItems.style.display = 'none';
+            }
+        });
+    </script>
+    <script src="..//scripts/trang-chinh.js"></script>
+</body>
+</html>

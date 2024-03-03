@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/fonts/fontawesome-free-6.5.1-web/fontawesome-free-6.5.1-web/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/grid.css">
+    <link rel="shortcut icon" href="https://portal.ptit.edu.vn/giaovu/wp-content/uploads/2016/05/favicon.png">
+    <link rel="stylesheet" href="../../assets/css/dashboard-admin.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="grid wide">
+                <div class="row">
+                    <nav class="header__navbar">
+                        <a class = "header__logo" href="">
+                            <img src="../../assets/images/LOGO_PTIT.jpg" alt="" class="header__logo-icon">
+                        </a>
+                        <div class="header__navbar-search">
+                            <div class="header__search-input-wrap">
+                                <input type="text" class="header__search-input" id = "searchInput" placeholder="Tìm kiếm nội dung">
+                                <div class="header__search-history">
+                                    <h3 class="header__search-history-heading">
+                                        Lịch sử tìm kiếm
+                                    </h3>
+                                    <ul class="header__search-history-list">
+                                        <a href = "" class="header__search-history-item">Thi giữa kì</a>
+                                        <a href = "" class="header__search-history-item">Thi cuối kì</a>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button onclick="searchExam()" class="search__btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                        <select class = "header__navbar-filter" id="statusFilter">
+                            <option value="all">Tất cả</option>
+                            <option value="accessible">Truy cập tự do</option>
+                            <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                        </select>
+                        <ul class="header__navbar-list">
+                            <li class="header__navbar-item"> 
+                                <a href="" class="header__navbar-item-link">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    Trợ giúp
+                                </a>
+                            </li> 
+                            <div class="header-right">
+                                <div class="avatar" id="avatar">
+                                    <!-- Avatar icon or image -->
+                                    <img src="/assets/images/LOGO_PTIT.jpg" alt="">
+                                    <div class="dropdown-content" id="dropdownContent">
+                                        <!-- Các dòng chữ -->
+                                        <a href="#">Thay đổi mật khẩu</a>
+                                        <a href="../../assets/features/trang-dang-nhap-admin.html">Đăng xuất</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="grid wide">
+                <div class="row">
+                    <div class="category l-2">
+                        <div class="category__option">
+                            <h3 id = "exam-list" class="category__option-heading">
+                                <i class="fa-solid fa-list"></i>
+                                Chức năng
+                            </h3>
+                            <ul id = "list-exam" class="category__option-list" id = "list-exam" style = "display: none">
+                                <a href="#ky-thi" class = "category__option-item"><h4>Quản lý kỳ thi</h4></a>
+                                <a href="#nguoi-dung" class = "category__option-item"><h4>Quản lý người dùng</h4></a>
+                                <a href="#thong-ke" class = "category__option-item"><h4>Thống kê</h4></a>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content_box l-10">
+                        <section id="ky-thi" class="content">
+                            <h2>Quản lý danh sách các kỳ thi</h2>
+                            
+                            <ul id="danh-sach-ky-thi">
+                                <!-- Danh sách các kỳ thi sẽ được thêm bằng JavaScript -->
+                            </ul>
+                            <button id="them-ky-thi">Thêm mới</button>
+                            <button id="chinh-sua-ky-thi" style="display: none;">Chỉnh sửa</button>
+                            <!-- Button xóa kỳ thi -->
+                            <button id="xoa-ky-thi" style="display: none;">Xóa</button>
+                        </section>
+                    
+                        <section id="nguoi-dung" class="content">
+                            <h2>Quản lý danh sách người dùng</h2>
+                            
+                            <ul id="danh-sach-nguoi-dung">
+                                <!-- Danh sách người dùng sẽ được thêm bằng JavaScript -->
+                            </ul>
+                            <button id="them-nguoi-dung">Thêm mới</button>
+                            <button id="chinh-sua-nguoi-dung" style="display: none;">Chỉnh sửa</button>
+                            <!-- Button xóa kỳ thi -->
+                            <button id="xoa-nguoi-dung" style="display: none;">Xóa</button>
+                        </section>
+                    
+                        <section id="thong-ke" class="content">
+                            <h2>Thống kê</h2>
+                            <!-- Hiển thị thông tin thống kê sẽ được thêm bằng JavaScript -->
+                            <div id="thong-ke-result">
+                                
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+
+        </div>
+    </div>
+    <script>
+        var examList = document.getElementById('exam-list');
+
+        // Thêm sự kiện click cho phần tử "Danh sách kỳ thi"
+        examList.addEventListener('click', function() {
+            // Lấy danh sách các kỳ thi
+            var examListItems = document.getElementById('list-exam');
+            
+            // Kiểm tra trạng thái hiển thị của danh sách kỳ thi
+            if (examListItems.style.display == 'none') {
+                // Nếu đang ẩn, hiển thị danh sách
+                examListItems.style.display = 'block';
+            } else if(examListItems.style.display = 'block') {
+                // Nếu đang hiển thị, ẩn danh sách
+                examListItems.style.display = 'none';
+            }
+        });
+    </script>
+    <script src="..//scripts/dashboard-admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Thống kê</title>
+    <link rel="stylesheet" href="../Assets/style/trang-thong-ke.css">
+    <script src="../Assets/script/trang-thong-ke.js"></script>
+    <link rel="shortcut icon" href="https://portal.ptit.edu.vn/giaovu/wp-content/uploads/2016/05/favicon.png">
+</head>
+
+<body>
+    <header>
+        <h1>Dashboard Admin</h1>
+    </header>
+    <div class="header-right">
+        <a href="./trang-dang-nhap-admin.html">Đăng xuất</a>
+    </div>
+    <main>
+        <section class="sidebar">
+            <ul>
+                <li><a href="./dashboard-admin.html">Quản lý tài khoản</a></li>
+                <li><a href="./trang-bai-thi.html">Quản lý bài thi</a></li>
+                <li><a href="./tao-chinh-sua-ky-thi.html">Quản lý câu hỏi</a></li>
+                <li><a href="./trang-thong-ke.html">Thống kê</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <h2>Thống kê</h2>
+            <div class="filter">
+                <p>Lọc theo:</p>
+                <select name="filter">
+                    <option value="all">Tất cả</option>
+                    <option value="today">Hôm nay</option>
+                    <option value="week">Tuần này</option>
+                    <option value="month">Tháng này</option>
+                    <option value="year">Năm nay</option>
+                </select>
+            </div>
+            <div class="statistics">
+                <div class="statistic-item">
+                    <h3>Số bài thi đã tạo</h3>
+                    <p id="total-exams">100</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>Số bài thi đã hoàn thành</h3>
+                    <p id="completed-exams">50</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>Tỷ lệ hoàn thành</h3>
+                    <p id="completion-rate">50%</p>
+                </div>
+                <div class="statistic-item">
+                    <h3>Điểm trung bình</h3>
+                    <p id="average-score">80</p>
+                </div>
+            </div>
+            <div class="chart">
+                <canvas id="chart"></canvas>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
