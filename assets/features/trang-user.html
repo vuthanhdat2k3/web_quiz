@@ -41,9 +41,9 @@
                             </button>
                         </div>
                         <select class = "header__navbar-filter" id="statusFilter">
-                            <option value="all">Tất cả</option>
-                            <option value="accessible">Truy cập tự do</option>
-                            <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                            <option value="ALL">Tất cả</option>
+                            <option value="Tự do">Truy cập tự do</option>
+                            <option value="Thời gian cụ thể">Yêu cầu thời gian cụ thể</option>
                         </select>
                         <ul class="header__navbar-list">
                             <li class="header__navbar-item"> 
@@ -58,8 +58,7 @@
                                     <img src="/assets/images/LOGO_PTIT.jpg" alt="">
                                     <div class="dropdown-content" id="dropdownContent">
                                         <!-- Các dòng chữ -->
-                                        <a href="#">Cập nhập thông tin sinh viên</a>
-                                        <a href="#">Thay đổi mật khẩu</a>
+                                        <a href="../../assets/features/thay-doi-mat-khau.html">Thay đổi mật khẩu</a>
                                         <a href="../../assets/features/dang-nhap.html">Đăng xuất</a>
                                     </div>
                                 </div>
@@ -81,32 +80,8 @@
                                 <i class="fa-solid fa-list"></i>
                                 Danh Sách Kỳ Thi
                             </h3>
-                            <ul id = "list-exam" class="category__option-list" id = "list-exam" style = "display: none">
-                                <a href="../../assets/features/trang-bai-thi.html" value = "scheduled" class="category__option-item category__option-item--active">
-                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Có thời gian cụ thể</p>
-                                </a>
-                                <a href="" value = "accessible" class="category__option-item">
-                                    <h4>Luyện Tập Môn Công Nghệ Phầm Mềm</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Truy cập tự do</p>
-                                </a>
-                                <a href="" value = "scheduled" class="category__option-item">
-                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Có thời gian cụ thể</p>
-                                </a>
-                                <a href="" value = "scheduled" class="category__option-item">
-                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Có thời gian cụ thể</p>
-                                </a>
-                                <a href="" value = "accessible" class="category__option-item">
-                                    <h4>Luyện tập Môn Trí Truệ Nhân Tạo</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Truy cập tự do</p>
-                                </a>
+                            <ul id = "list-exam" class="category__option-list" id = "list-exam">
+                                <!-- Exam duoc day len tu JS -->
                             </ul>
                         </div>
                     </div>
@@ -120,7 +95,7 @@
 
         </div>
     </div>
-    <script>
+    <!-- <script>
         var examList = document.getElementById('exam-list');
 
         // Thêm sự kiện click cho phần tử "Danh sách kỳ thi"
@@ -137,7 +112,7 @@
                 examListItems.style.display = 'none';
             }
         });
-    </script>
+    </script> -->
     <script src="..//scripts/trang-chinh.js"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+
+
 .header {
   height: var(--height-navbar);
   display: flex;
@@ -59,6 +61,52 @@ div.header__navbar-item .header__navbar-item-link {
 
 .header__navbar-item-link i {
   margin-right: 4px;
+}
+
+.avatar {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.avatar img {
+  border-radius: 50%; 
+  width: 40px; 
+  height: 40px;
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width: 200px;
+  border-radius: 5px;
+  right: 0; /* Điều chỉnh khoảng cách về bên trái */
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 24px 32px;
+  text-decoration: none;
+  display: block;
+  font-size: 1.4rem;
+  position: relative;
+}
+
+.dropdown-content a::before {
+  content: "";
+  position: absolute;
+  border-top: 1px solid #E1E1E1;
+  top: 0px;
+  left: 16px;
+  right: 16px;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
 }
 
 .header__logo {
@@ -177,6 +225,7 @@ div.header__navbar-item:hover {
   border-radius: 3px;
   box-shadow:0 1px 5px rgb(172,172,172);
   display: none;
+  z-index: 1;
 }
 
 .header__search-history-heading {
@@ -204,7 +253,6 @@ div.header__navbar-item:hover {
 }
 
 .category {
-  
   margin-top: 8px;
   
 }
@@ -228,6 +276,7 @@ div.header__navbar-item:hover {
   width: 100%;
   display: block;
   padding: 16px 0;
+  border-radius: 5px 5px 0 0;
 }
 
 .category__option-heading:hover {
@@ -302,90 +351,145 @@ div.header__navbar-item:hover {
   transform: translateY((-50%));
 }
 
-
-/* Content */
-.content__exam {
+.content__info {
   margin-top:8px;
+  
 }
-.content__header {
+
+.content__info-heading {
   background-color: var(--theme-color);
-  color: #fff;
-  padding: 8px 0;
-  text-align: center;
-  margin: 0 20px;
+  margin: 0 16px;
   border-radius: 5px;
 }
 
-.content__header-heading {
-  margin: 12px 0;
-  font-size: 2.5rem;
+.content__info-heading h1{
+  font-size: 3rem;
+  text-align: center;
+  padding-bottom:8px;
+  padding-top: 16px;
+  margin: 0;
+  color: var(--white-color);
 }
 
 .timer {
-  font-size: 18px;
-  margin: 4px 0;
+  font-size:1.4rem;
+  text-align: center;
+  padding:8px 0;
+  margin-bottom: 0;
+  color: var(--white-color);
+
 }
 
-.content__question {
+
+.content__info-exam {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 10px auto;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.question {
-  margin-bottom: 30px;
+.candidate-info {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.question h2 {
-  margin-top: 0;
+.candidate-info h2 {
+  margin: 18px 0;
   color: var(--text-color);
-  font-size: 2rem;
+  font-size:2rem;
+}
+.form-group{
+  margin: 16px 0;
 }
 
-.question p {
+.form-group label {
   color: var(--text-color);
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.form-group input {
+  width: calc(100% - 12px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
   font-size: 1.8rem;
 }
 
-.question ul {
+.question {
+  padding:0 20px;
+}
+
+.exam__name {
+  font-size:2rem;
+  color: var(--text-color);
+}
+
+.exam__time {
+  font-size:1.5rem;
+}
+
+.question__list {
+  padding-left: 0;
   list-style: none;
-  padding: 0;
 }
 
-.question li {
-  margin-bottom: 10px;
+.question__item {
+  margin-bottom: 32px;
 }
 
-.question label {
-  display: block;
-  color: #333;
+.question__item label {
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
-.question input[type="radio"] {
-  margin-right: 10px;
+.question__answer {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  margin-left: 16px;
 }
 
-footer {
+.question__item input {
+  font-size: 1.8rem;
+  margin-right: 8px;
+}
+
+.question__item span {
+  font-size: 1.8rem;
+
+
+}
+
+.submit__exam{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 400px;
+}
+
+
+.submit__exam button{
   text-align: center;
-  margin-top: 20px;
-}
-
-footer button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 2rem;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding:12px 24px;
+  color: var(--white-color);border-radius: 10px;
+  background-color: var(--theme-color);
 }
 
-footer button:hover {
-  background-color: #0056b3;
+.submit__exam button:hover{
+  cursor: pointer;
+  background: #e92b32;
 }
+
+
+
+
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,12 +15,13 @@
     <link rel="stylesheet" href="../../assets/css/trang-bai-thi.css">
 </head>
 <body>
+    
     <div class="app">
         <div class="header">
             <div class="grid wide">
                 <div class="row">
                     <nav class="header__navbar">
-                        <a class = "header__logo" href="">
+                        <a class = "header__logo" href="../../assets/features/trang-user.html">
                             <img src="../../assets/images/LOGO_PTIT.jpg" alt="" class="header__logo-icon">
                         </a>
                         <div class="header__navbar-search">
@@ -41,9 +42,9 @@
                             </button>
                         </div>
                         <select class = "header__navbar-filter" id="statusFilter">
-                            <option value="all">Tất cả</option>
-                            <option value="accessible">Truy cập tự do</option>
-                            <option value="scheduled">Yêu cầu thời gian cụ thể</option>
+                            <option value="ALL">Tất cả</option>
+                            <option value="Tự do">Truy cập tự do</option>
+                            <option value="Thời gian cụ thể">Yêu cầu thời gian cụ thể</option>
                         </select>
                         <ul class="header__navbar-list">
                             <li class="header__navbar-item"> 
@@ -52,11 +53,16 @@
                                     Trợ giúp
                                 </a>
                             </li> 
-                            <div class="header__navbar-item"> 
-                                <a href="assets/features/dang-nhap.html" class="header__navbar-item-link">Đăng nhập</a>
-                            </div>
-                            <div class="header__navbar-item"> 
-                                <a href="assets/features/dang-ky.html" class="header__navbar-item-link">Đăng ký</a>
+                            <div class="header-right">
+                                <div class="avatar" id="avatar">
+                                    <!-- Avatar icon or image -->
+                                    <img src="/assets/images/LOGO_PTIT.jpg" alt="">
+                                    <div class="dropdown-content" id="dropdownContent">
+                                        <!-- Các dòng chữ -->
+                                        <a href="../../assets/features/thay-doi-mat-khau.html">Thay đổi mật khẩu</a>
+                                        <a href="../../assets/features/dang-nhap.html">Đăng xuất</a>
+                                    </div>
+                                </div>
                             </div>
                         </ul>
                         
@@ -76,145 +82,40 @@
                                 Danh Sách Kỳ Thi
                             </h3>
                             <ul id = "list-exam" class="category__option-list" id = "list-exam">
-                                <a href="assets/features/trang-bai-thi.html" value = "scheduled" class="category__option-item category__option-item--active">
-                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Có thời gian cụ thể</p>
-                                </a>
-                                <a href="" value = "accessible" class="category__option-item">
-                                    <h4>Luyện Tập Môn Công Nghệ Phầm Mềm</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Truy cập tự do</p>
-                                </a>
-                                <a href="" value = "scheduled" class="category__option-item">
-                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Có thời gian cụ thể</p>
-                                </a>
-                                <a href="" value = "scheduled" class="category__option-item">
-                                    <h4>Thi Giữa Kì Môn Lập Trình Web</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Có thời gian cụ thể</p>
-                                </a>
-                                <a href="" value = "accessible" class="category__option-item">
-                                    <h4>Luyện tập Môn Trí Truệ Nhân Tạo</h4>
-                                    <p>Thời gian: 90 phút</p>
-                                    <p>Loại: Truy cập tự do</p>
-                                </a>
+                                <!-- Exam duoc day len tu JS -->
                             </ul>
                         </div>
-                        
                     </div>
 
-                    <div class="content__exam l-10">
-                        <header class = "content__header">
-                            <h1 class = "content__header-heading">Bài thi</h1>
+                    <div class="content__info l-10">
+                        <header class = "content__info-heading">
+                            <h1>Bài thi</h1>
                             <div class="timer">Thời gian còn lại: <span id="countdown"></span></div>
                         </header>
-                        <div class = "content__question">
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
+                        <main class = "content__info-exam">
+                            <!-- Phần nhập thông tin thí sinh -->
+                            <section class="candidate-info">
+                                <h2>Thông tin thí sinh</h2>
+                                <form id="candidate-form">
+                                    <div class="form-group">
+                                        <label for="fullname">Họ và tên:</label>
+                                        <input type="text" id="fullname" name="fullname" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="student-id">Mã sinh viên:</label>
+                                        <input type="text" id="student-id" name="student-id" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="class">Lớp:</label>
+                                        <input type="text" id="class" name="class" required>
+                                    </div>
+                                </form>
                             </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <section class="question">
-                                <h2>Câu hỏi 1:</h2>
-                                <p>Đây là nội dung của câu hỏi 1.</p>
-                                <ul>
-                                    <li><label><input type="radio" name="question1" value="true"> Lựa chọn A</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn B</label></li>
-                                    <li><label><input type="radio" name="question1" value="false"> Lựa chọn C</label></li>
-                                    <li><label><input type="radio" name="question1" value="fasle"> Lựa chọn D</label></li>
-                                </ul>
-                            </section>
-                            <!-- Các câu hỏi khác -->
-                        </div>
-                        <footer>
+                    
+                            <!-- Phần câu hỏi -->
+                            
+                        </main>
+                        <footer class = "submit__exam">
                             <button onclick="submitExam()">Nộp bài</button>
                         </footer>
                     </div>
@@ -226,7 +127,7 @@
 
         </div>
     </div>
-    <script>
+    <!-- <script>
         var examList = document.getElementById('exam-list');
 
         // Thêm sự kiện click cho phần tử "Danh sách kỳ thi"
@@ -243,8 +144,7 @@
                 examListItems.style.display = 'none';
             }
         });
-    </script>
-    <script src="/assets/scripts/trang-chinh.js"></script>
-    <script src="/assets/scripts/trang-bai-thi.js"></script>
+    </script> -->
+    <script src="../../assets/scripts/trang-bai-thi.js"></script>
 </body>
 </html>

@@ -275,6 +275,7 @@ div.header__navbar-item {
     width: 100%;
     display: block;
     padding: 16px 0;
+    border-radius: 5px 5px 0 0;
 }
 
 .category__option-heading:hover {

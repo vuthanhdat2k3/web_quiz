@@ -1,0 +1,92 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color: #ff373d;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+  padding-left: 10px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.search-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.search-container input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.search-container button {
+  padding: 8px 20px;
+  background-color: #ff373d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background-color: #e2252c;
+}
+
+.student {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.exam {
+  margin-bottom: 10px;
+}
+
+.detail {
+  padding-left: 20px;
+}
+
+.detail h5 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.detail p {
+  margin: 5px 0;
+}
+
+.back-icon {
+  color: #fff;
+}
+
+#exportBtn {
+  background-color: #ff373d; /* Màu nền */
+  color: white; /* Màu chữ */
+  padding: 10px 20px; /* Khoảng cách bên trong */
+  border: none; /* Không có đường viền */
+  border-radius: 5px; /* Bo góc */
+  cursor: pointer; /* Hình con trỏ khi di chuột qua */
+  font-size: 16px; /* Cỡ chữ */
+  display: none;
+}
+
+/* CSS cho nút export khi di chuột qua */
+#exportBtn:hover {
+  background-color: #e2252c; /* Màu nền khi di chuột qua */
+}
+
+.hidden {
+  display: none;
+}

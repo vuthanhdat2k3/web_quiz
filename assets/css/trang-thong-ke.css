@@ -1,104 +1,141 @@
+/* Kiểu cho trang thống kê */
+/* @import url('https://fonts.googleapis.com/css2?family=Arial+Unicode+MS&display=swap'); */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+  font-family: 'Arial Unicode MS', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
-header {
-    background-color: #c80808;
-    color: #171616;
-    padding: 10px;
+.header {
+  background-color: #ff373d;
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
+
+.header h1 {
+  margin: 0;
+  padding-left: 10px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.back-icon {
+  color: white;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.back-icon i {
+  font-size: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+
+}
+.filter {
+  margin-bottom: 10px; /* Khoảng cách từ container trên xuống phần filter */
+
+}
+
+.filter label {
+  margin-right: 10px; /* Khoảng cách giữa label và dropdown */
+}
+
+.filter select {
+  padding: 3px; /* Độ dày của dropdown */
+  border-radius: 5px; /* Bo tròn góc của dropdown */
+  border: 1px solid #ccc; /* Viền xám */
+  background-color: #fff; /* Màu nền trắng */
+  font-size: 16px; /* Cỡ chữ */
+  cursor: pointer; /* Con trỏ chuột là bàn tay */
+}
+
 
 h1 {
-    text-align: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.header-right {
-    float: right;
+.table-container {
+  overflow-x: auto;
 }
 
-a {
-    color: #fff;
-    text-decoration: none;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-main {
-    padding: 20px;
+th, td {
+  padding: 5px 10px;
+  text-align: center;
 }
 
-.sidebar {
-    width: 20%;
-    float: left;
-    border: 1px solid #ccc;
-    padding: 10px;
+th {
+  background-color: #ff373d;
+  color: #fff;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-li {
-    padding: 5px;
-    border-bottom: 1px solid #ccc;
+tr:hover {
+  background-color: #ddd;
 }
 
-a {
-    color: #000;
-    text-decoration: none;
+/* CSS cho biểu đồ */
+.chart-container {
+  width: 100%; /* Điều chỉnh chiều rộng của biểu đồ */
+  margin-top: 100px; /* Tăng khoảng cách với bảng */
+  align-items: center;
+  text-align: center;
+  min-width: 600px;
 }
 
-.content {
-    width: 80%;
-    float: right;
-    padding: 10px;
-    border: 1px solid #ccc;
+
+.chart-container #average-score-chart {
+  max-width: 800px; /* Điều chỉnh chiều rộng tối đa của biểu đồ */
+  margin: 0 auto; /* Căn giữa biểu đồ trong container */
+  min-width: 600px;
 }
 
-h2 {
-    text-align: center;
+.export-buttons {
+  margin-top: 20px; /* Khoảng cách từ biểu đồ xuống đến nút */
+  text-align: center;
 }
 
-.filter {
-    margin-bottom: 20px;
+.export-buttons button {
+  background-color: #ff373d; /* Màu nền */
+  border: none; /* Không viền */
+  border-radius: 5px;
+  color: white; /* Màu chữ */
+  padding: 10px 20px; /* Độ rộng và độ cao của nút */
+  text-align: center; /* Căn giữa nội dung nút */
+  text-decoration: none; /* Không gạch chân */
+  display: inline-block; /* Hiển thị là một khối */
+  font-size: 16px; /* Cỡ chữ */
+  margin-right: 10px; /* Khoảng cách với nút bên cạnh */
+  cursor: pointer; /* Con trỏ chuột là bàn tay */
 }
 
-p {
-    margin-bottom: 5px;
+.export-buttons button:hover {
+  background-color: #e2252c; /* Màu nền khi di chuột vào */
 }
 
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+.export-buttons button:focus {
+  outline: none; /* Loại bỏ viền khi focus */
 }
 
-.statistics {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.statistic-item {
-    width: 25%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-h3 {
-    margin-bottom: 5px;
-}
-
-p {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.chart {
-    width: 100%;
-    height: 400px;
-    margin-top: 20px;
+.export-buttons button i{
+  margin-right: 15px;
 }

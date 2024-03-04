@@ -1,0 +1,184 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.header {
+  background-color: #ff373d;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+  padding-left: 10px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.back-icon {
+  color: white;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.back-icon i {
+  font-size: 20px;
+}
+
+main {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+.header-right {
+    float: right;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+.sidebar {
+    width: 20%;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.content {
+    width: 80%;
+    float: right;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+/* Phần nhập đáp án chính xác */
+.dap-an-dung-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.dap-an-dung-label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.dap-an-dung-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.dap-an-dung-inputs label {
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+.dap-an-dung-inputs input[type="radio"] {
+  margin-right: 5px;
+}

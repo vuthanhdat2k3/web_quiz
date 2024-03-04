@@ -27,17 +27,22 @@ function displayExams() {
     exams.forEach(function(exam){
       var listItem = document.createElement('a');
       listItem.setAttribute("value", exam.loaiKyThi);
-      listItem.href= "Features/trang-bai-thi.html";
+      listItem.href= "../../assets/features/trang-bai-thi.html"; 
       listItem.classList.add("category__option-item");
       var h4 = document.createElement('h4');
       h4.textContent = exam.tenKyThi;
       
+      // Thêm sự kiện click để lưu tên kỳ thi vào localStorage
+    h4.addEventListener("click", function() {
+        localStorage.setItem("currentExam", exam.tenKyThi);
+    });
+      
       var p1 = document.createElement('p');
-      p1.textContent = "Mô tả: " + exam.moTa;
+      p1.textContent = "Thời gian: " + exam.thoiGian + " phút";
       var p2 = document.createElement('p');
       p2.textContent = "Loại: " + exam.loaiKyThi;
       
-      listItem.appendChild(a);
+      listItem.appendChild(h4);
       listItem.appendChild(p1);
       listItem.appendChild(p2);
       examList.appendChild(listItem);

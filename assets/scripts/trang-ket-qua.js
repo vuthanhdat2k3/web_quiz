@@ -1,6 +1,9 @@
 var correctAnswers = 0;
 var totalQuestions = 0;
 var point = 0;
+var hoTen = "";
+var maSv = "";
+var lop = "";
 // Giả sử có một hàm để lấy dữ liệu về số câu trả lời đúng và tổng số câu
 function getSummary() {
     var result = JSON.parse(localStorage.getItem("result"));
@@ -9,50 +12,87 @@ function getSummary() {
     point = result.point;
 }
 
+function getInfo(){
+  var candidate = JSON.parse(localStorage.getItem('candidate'));
+  hoTen = candidate.hoTen;
+  maSv = candidate.maSv;
+  lop = candidate.lop;
+}
+
 function displaySummary() {
-    document.getElementById('correctAnswers').textContent = correctAnswers;
-    document.getElementById('totalQuestions').textContent = totalQuestions;
-    document.getElementById('score').textContent = point;
+  document.getElementById('name').textContent = hoTen;
+  document.getElementById('id-student').textContent = maSv;
+  document.getElementById('classroom').textContent = lop;
+  document.getElementById('correctAnswers').textContent = correctAnswers;
+  document.getElementById('totalQuestions').textContent = totalQuestions;
+  document.getElementById('score').textContent = point;
 }
 
 window.onload = function() {
   getSummary();
+  getInfo();
   displaySummary();
 }
 
+let answerShown = false; // Biến để theo dõi xem đáp án đã được hiển thị hay chưa
+var selectedUser = localStorage.getItem('selectedUser');
+
 function reviewAnswers() {
-  // Lấy dữ liệu từ localStorage
-  var result = JSON.parse(localStorage.getItem("result"));
-  
-  // Kiểm tra xem có dữ liệu không
-  if (!result) {
-      console.log("Không có dữ liệu câu trả lời.");
-      return;
-  }
+    if (!answerShown) { // Kiểm tra xem đáp án đã được hiển thị chưa
+        const exams = JSON.parse(localStorage.getItem('exams'));
+        const currentExam = localStorage.getItem('currentExam');
+        
+        // Tìm bài thi hiện tại trong mảng exams
+        const currentExamData = exams.find(exam => exam.tenKyThi === currentExam);
+        
+        // Lấy phần tử section.question để chèn câu hỏi vào
+        const questionSection = document.querySelector('.detail-answer');   
+        
+        // Hiển thị câu hỏi và đáp án
+        currentExamData.cauHoi.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add("question");
+            questionDiv.innerHTML = `<p class = "question-heading"><b>Câu hỏi ${index + 1}:</b> ${question.question}</p>`;
+            
+            // Hiển thị 4 đáp án và đáp án đúng
+            const answersDiv = document.createElement('div');
+            answersDiv.classList.add("answer");
+            question.answers.forEach((answer, i) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.classList.add("answer-item");
+                const answerInput = document.createElement('input');
+                const answerLabel = document.createElement('label');
+                answerInput.type = 'radio';
+                answerInput.name = `answer${index}`;
+                answerInput.value = String.fromCharCode(65 + i);
+                if(answerInput.value === selectedUser[2 * index]) {
+                  answerInput.checked = true;
+                  if(answerInput.value === question.correctAnswer){
+                    answerLabel.style.color = "green";
+                  }
+                  else{
+                    answerLabel.style.color = "red";
+                  }
+                }
+                answerLabel.appendChild(answerInput);
+                answerLabel.appendChild(document.createTextNode(answer));
+                answerDiv.appendChild(answerLabel);
+                // answerDiv.innerHTML = <label><input type="radio" name="answer${index}" value="${String.fromCharCode(65 + i)}"> ${answer}</label>;
+                answersDiv.appendChild(answerDiv);
 
-  var questions = "trang-bai-thi.html".getElementsByTagName('ul');
-  var answersHTML = ""; // Chuỗi HTML để hiển thị câu trả lời chi tiết
+                
+            });
+            questionDiv.appendChild(answersDiv);
+            
+            const correctAnswerDiv = document.createElement('div')
+            correctAnswerDiv.classList.add("answer-correct");
+            correctAnswerDiv.innerHTML = `<p>Đáp án đúng: ${question.correctAnswer}</p>`;
+            questionDiv.appendChild(correctAnswerDiv);
+            
+            questionSection.appendChild(questionDiv);
+            document.getElementById('viewAnswer').style.display = "none";
+        });
 
-  // Duyệt qua mỗi câu hỏi và hiển thị câu trả lời và đáp án đúng
-  for (var i = 0; i < questions.length; i++) {
-      var questionNumber = i + 1; // Số thứ tự của câu hỏi
-      var userAnswer = result.answers[i]; // Câu trả lời của người dùng
-      var correctAnswer = result.correctAnswers[i]; // Đáp án đúng của câu hỏi
-
-      // Tạo HTML cho câu hỏi và câu trả lời
-      var questionHTML = "<p>Câu hỏi " + questionNumber + ": " + questions[i].textContent + "</p>";
-      var userAnswerHTML = "<p>Câu trả lời của bạn: " + userAnswer + "</p>";
-      var correctAnswerHTML = "<p>Đáp án đúng: " + correctAnswer + "</p>";
-
-      // Kết hợp HTML của câu hỏi và câu trả lời
-      var questionAnswerHTML = questionHTML + userAnswerHTML + correctAnswerHTML;
-
-      // Thêm vào chuỗi HTML tổng thể
-      answersHTML += questionAnswerHTML;
-  }
-  console.log(answersHTML);
-  // Hiển thị chuỗi HTML đã tạo vào phần #answers trên trang
-  document.getElementById("answers").innerHTML = answersHTML;
+        answerShown = true; // Đặt biến answerShown thành true để chỉ hiển thị một lần duy nhất
+    }
 }
-
-

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo/Chỉnh sửa Kỳ thi</title>
+    <link rel="stylesheet" href="../../assets/css/tao-ky-thi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+      <a href="dashboard-admin.html" class="back-icon">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+        <h1>Tạo Kỳ thi</h1>
+    </div>
+
+    <main>
+        <form id="ky-thi-form">
+            <div class="form-group">
+                <label for="ten-ky-thi">Tên kỳ thi:</label>
+                <input type="text" id="ten-ky-thi" name="ten-ky-thi" required>
+            </div>
+            <div class="form-group">
+                <label for="thoi-gian">Thời gian(phút):</label>
+                <input type="number" id="thoi-gian" name="thoi-gian" required>
+            </div>
+            <div class="form-group">
+                <label for="loai-ky-thi">Loại kỳ thi:</label>
+                <select id="loai-ky-thi" name="loai-ky-thi">
+                    <option value="Tự do">Tự do</option>
+                    <option value="Thời gian cụ thể">Thời gian cụ thể</option>
+                </select>
+            </div>
+            <div class="form-group" id="cau-hoi-container">
+             <!-- Thêm câu hỏi bằng javascript -->
+            </div>
+          
+            <button id="them-cau-hoi" type="button">Thêm câu hỏi</button>
+            <button type="submit" id="luu-ky-thi">Lưu</button>
+            <input type="file" id="file-input" accept=".xlsx, .xls">
+
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 - Dashboard Admin</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+    <script src="../../assets/scripts/tao-ky-thi.js"></script>
+</body>
+</html>

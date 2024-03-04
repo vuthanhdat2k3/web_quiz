@@ -36,15 +36,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <button onclick="searchExam()" class="search__btn">
+                         
+                            <button onclick="searchFeature()" class="search__btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
-                        <select class = "header__navbar-filter" id="statusFilter">
-                            <option value="all">Tất cả</option>
-                            <option value="accessible">Truy cập tự do</option>
-                            <option value="scheduled">Yêu cầu thời gian cụ thể</option>
-                        </select>
+                        
                         <ul class="header__navbar-list">
                             <li class="header__navbar-item"> 
                                 <a href="" class="header__navbar-item-link">
@@ -58,7 +55,6 @@
                                     <img src="/assets/images/LOGO_PTIT.jpg" alt="">
                                     <div class="dropdown-content" id="dropdownContent">
                                         <!-- Các dòng chữ -->
-                                        <a href="#">Thay đổi mật khẩu</a>
                                         <a href="../../assets/features/trang-dang-nhap-admin.html">Đăng xuất</a>
                                     </div>
                                 </div>
@@ -80,48 +76,80 @@
                                 <i class="fa-solid fa-list"></i>
                                 Chức năng
                             </h3>
-                            <ul id = "list-exam" class="category__option-list" id = "list-exam" style = "display: none">
+                            <ul id = "list-exam" class="category__option-list" id = "list-exam">
                                 <a href="#ky-thi" class = "category__option-item"><h4>Quản lý kỳ thi</h4></a>
                                 <a href="#nguoi-dung" class = "category__option-item"><h4>Quản lý người dùng</h4></a>
                                 <a href="#thong-ke" class = "category__option-item"><h4>Thống kê</h4></a>
+                                <a href="#ket-qua" class = "category__option-item"><h4>Kết quả</h4></a>
                             </ul>
                         </div>
                     </div>
 
                     <div class="content_box l-10">
                         <section id="ky-thi" class="content">
-                            <h2>Quản lý danh sách các kỳ thi</h2>
+                            <h2 class = "content__heading">Quản lý danh sách các kỳ thi</h2>
                             
-                            <ul id="danh-sach-ky-thi">
+                            <ul class = "content__list" id="danh-sach-ky-thi">
                                 <!-- Danh sách các kỳ thi sẽ được thêm bằng JavaScript -->
                             </ul>
-                            <button id="them-ky-thi">Thêm mới</button>
-                            <button id="chinh-sua-ky-thi" style="display: none;">Chỉnh sửa</button>
-                            <!-- Button xóa kỳ thi -->
-                            <button id="xoa-ky-thi" style="display: none;">Xóa</button>
+                            <footer class = "footer">
+
+                                <button id="them-ky-thi" class = "content__btn">Thêm mới</button>
+                            </footer>
                         </section>
                     
                         <section id="nguoi-dung" class="content">
                             <h2>Quản lý danh sách người dùng</h2>
                             
-                            <ul id="danh-sach-nguoi-dung">
+                            <ul class = "content__list" id="danh-sach-nguoi-dung">
                                 <!-- Danh sách người dùng sẽ được thêm bằng JavaScript -->
                             </ul>
-                            <button id="them-nguoi-dung">Thêm mới</button>
-                            <button id="chinh-sua-nguoi-dung" style="display: none;">Chỉnh sửa</button>
-                            <!-- Button xóa kỳ thi -->
-                            <button id="xoa-nguoi-dung" style="display: none;">Xóa</button>
-                        </section>
-                    
-                        <section id="thong-ke" class="content">
-                            <h2>Thống kê</h2>
-                            <!-- Hiển thị thông tin thống kê sẽ được thêm bằng JavaScript -->
-                            <div id="thong-ke-result">
+                            <footer class = "footer">
+
+                                <button id="them-nguoi-dung" class = "content__btn">Thêm mới</button>
                                 
-                            </div>
+                            </footer>
+                            <!-- <form id="add-user-form" style="display: none;">
+                              <input type="text" placeholder="Tên người dùng" name="username" required>
+                              <input type="email" placeholder="Email" name="email" required>
+                              <input type="password" placeholder="Mật khẩu" name="password" required>
+                              <input type="password" placeholder="Xác nhận mật khẩu" name="confirm_password" required>
+
+                                <button type="submit">Thêm</button>
+
+                              <button type="button" onclick="document.getElementById('add-user-form').style.display = 'none';">Hủy</button>
+                            </form>
+                            <form id="edit-user-form" style="display: none;">
+                                <input type="email" placeholder="Email" name="email" required>
+                                <input type="text" placeholder="Mật khẩu" name="password" required>
+                                <button type="submit">Lưu</button>
+                                <button type="button" onclick="document.getElementById('edit-user-form').style.display = 'none';">Hủy</button>
+                              </form> -->
                         </section>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="add-user-form" style = "display: none">
+                <input type="text" placeholder="Tên người dùng" name="username" required>
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Mật khẩu" name="password" required>
+                <input type="password" placeholder="Xác nhận mật khẩu" name="confirm_password" required>
+
+                  <button type="submit">Thêm</button>
+
+                <button id="cancelButtonAdd" type="button" onclick="document.getElementById('add-user-form').style.display = 'none';">Hủy</button>
+              </form>
+              <form id="edit-user-form" style = "display: none">
+                  <input type="email" placeholder="Email" name="email" required>
+                  <input type="text" placeholder="Mật khẩu" name="password" required>
+                  <button type="submit">Lưu</button>
+                  <button id="cancelButtonEdit" type="button" onclick="document.getElementById('edit-user-form').style.display = 'none';">Hủy</button>
+                </form>
             </div>
         </div>
 
@@ -129,7 +157,7 @@
 
         </div>
     </div>
-    <script>
+    <!-- <script>
         var examList = document.getElementById('exam-list');
 
         // Thêm sự kiện click cho phần tử "Danh sách kỳ thi"
@@ -146,7 +174,8 @@
                 examListItems.style.display = 'none';
             }
         });
-    </script>
+    </script> -->
     <script src="..//scripts/dashboard-admin.js"></script>
+    
 </body>
 </html>

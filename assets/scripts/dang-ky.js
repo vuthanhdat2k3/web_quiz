@@ -9,12 +9,6 @@ form.addEventListener("submit", (event) => {
     const email = form.querySelector("input[name='email']").value;
     const password = form.querySelector("input[name='password']").value;
     const confirmPassword = form.querySelector("input[name='confirm_password']").value;
-    var user = {
-      username: username,
-      email: email,
-      password: password,
-    };
-    localStorage.setItem(username, JSON.stringify(user)); 
 
     if (username === "" || email === "" || password === "" || confirmPassword === "") {
         alert("Vui lòng nhập đầy đủ thông tin!");
@@ -26,7 +20,30 @@ form.addEventListener("submit", (event) => {
         return;
     }
     else {
-      alert("Đăng ký thành công!");
-    }
+      // Get existing users from localStorage
+      var users = JSON.parse(localStorage.getItem("users")) || [];
 
+      var existingUser = users.find(function(user) {
+        return user.username === username;
+      });
+
+      if (!existingUser) {
+        var user = {
+          username: username,
+          email: email,
+          password: password,
+        };
+        // Add the new user to the existing exams
+        users.push(user);
+
+        // Save all users back to localStorage
+        localStorage.setItem("users", JSON.stringify(users));
+
+        alert('Đăng ký thành công!');
+        window.location.href="dang-nhap.html";
+        // Clear form fields
+      } else {
+        alert('Username đã tồn tại!');
+      }
+    }
 });

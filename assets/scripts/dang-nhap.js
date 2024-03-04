@@ -7,7 +7,14 @@ form.addEventListener("submit", (event) => {
 
     const username = form.querySelector("input[name='username']").value;
     const password = form.querySelector("input[name='password']").value;
-    const user = JSON.parse(localStorage.getItem(username));
+    const users = JSON.parse(localStorage.getItem("users"));
+    var user = null;
+    for(var i = 0 ; i < users.length ; i++){
+      if(users[i].username == username){
+        user = users[i];
+        break;
+      }
+    }
 
     if (username === "" || password === "") {
         alert("Vui lòng nhập đầy đủ thông tin!");
@@ -20,6 +27,7 @@ form.addEventListener("submit", (event) => {
       alert("Mật khẩu không chính xác!");
     }
     else{
-      window.location.href = "../../assets/features/trang-user.html";
+      localStorage.setItem('currentUsername', username);
+      window.location.href= "../../assets/features/trang-user.html";
     }
 });

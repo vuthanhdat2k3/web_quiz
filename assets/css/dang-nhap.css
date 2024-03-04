@@ -17,6 +17,8 @@ body {
 .admin-login {
   text-align: right;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .admin-login a {

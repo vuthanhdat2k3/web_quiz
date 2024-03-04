@@ -38,6 +38,11 @@ div.header__navbar-item {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;    display: block;
     border-radius: 10px;
     height: 50%;
+    transition: transform 0.3s ease;
+}
+
+div.header__navbar-item:hover {
+    transform: translateY(-5px);
 }
 
 div.header__navbar-item .header__navbar-item-link {
