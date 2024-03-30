@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Hiển thị phần tử mà người dùng đã chọn
           if(targetId == "thong-ke") window.location.href = "trang-thong-ke.html";
-          else if(targetId == "ket-qua") window.location.href = "trang-ket-qua-admin.html";
+          else if(targetId == "ket-qua") window.location.href = "admin-trang-ket-qua.html";
           else document.getElementById(targetId).style.display = "block";
       });
     });
@@ -137,47 +137,86 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   });
   
-  // Function to display users
-  function displayUsers() {
-    var users = JSON.parse(localStorage.getItem('users')) || [];
-    var userList = document.getElementById("danh-sach-nguoi-dung");
-    userList.innerHTML = "";
-    users.forEach(function(user) {
+  // // Function to display users
+  // function displayUsers() {
+  //   var users = JSON.parse(localStorage.getItem('users')) || [];
+  //   var userList = document.getElementById("danh-sach-nguoi-dung");
+  //   userList.innerHTML = "";
+  //   users.forEach(function(user) {
       
 
-        var listItemInfo = document.createElement("div");
-      listItemInfo.classList.add("content__item-info")
-      var listItemButton = document.createElement("div");
-      listItemButton.classList.add("content__item-button")
-      var listItem = document.createElement("li");
-      listItem.classList.add("content__item");
-      var a = document.createElement('a');
-      a.classList.add("content__item-heading");
-      a.textContent = user.username;
-      a.setAttribute("value", user.username);
-      listItemInfo.appendChild(a);
-      listItem.appendChild(listItemInfo);
-      var iconButton1 = document.createElement('button');
-      var iconButton2 = document.createElement('button');
-      iconButton1.classList.add("content__icon-btn");
-      iconButton2.classList.add("content__icon-btn");
-      var iconEdit = document.createElement('i');
-      iconEdit.classList.add('fas','fa-edit');
-      iconEdit.classList.add('chinh-sua-nguoi-dung');
-      iconButton1.appendChild(iconEdit);
-      var iconDelete = document.createElement('i');
-      iconDelete.classList.add('fas','fa-trash');
-      iconDelete.classList.add('xoa-nguoi-dung');
-      iconButton2.appendChild(iconDelete);
-      listItemButton.appendChild(iconButton1);
-      listItemButton.appendChild(iconButton2);
-      listItem.appendChild(listItemButton);
-      userList.appendChild(listItem);
-    });
+  //       var listItemInfo = document.createElement("div");
+  //     listItemInfo.classList.add("content__item-info")
+  //     var listItemButton = document.createElement("div");
+  //     listItemButton.classList.add("content__item-button")
+  //     var listItem = document.createElement("li");
+  //     listItem.classList.add("content__item");
+  //     var a = document.createElement('a');
+  //     a.classList.add("content__item-heading");
+  //     a.textContent = user.username;
+  //     a.setAttribute("value", user.username);
+  //     listItemInfo.appendChild(a);
+  //     listItem.appendChild(listItemInfo);
+  //     var iconButton1 = document.createElement('button');
+  //     var iconButton2 = document.createElement('button');
+  //     iconButton1.classList.add("content__icon-btn");
+  //     iconButton2.classList.add("content__icon-btn");
+  //     var iconEdit = document.createElement('i');
+  //     iconEdit.classList.add('fas','fa-edit');
+  //     iconEdit.classList.add('chinh-sua-nguoi-dung');
+  //     iconButton1.appendChild(iconEdit);
+  //     var iconDelete = document.createElement('i');
+  //     iconDelete.classList.add('fas','fa-trash');
+  //     iconDelete.classList.add('xoa-nguoi-dung');
+  //     iconButton2.appendChild(iconDelete);
+  //     listItemButton.appendChild(iconButton1);
+  //     listItemButton.appendChild(iconButton2);
+  //     listItem.appendChild(listItemButton);
+  //     userList.appendChild(listItem);
+  //   });
+  // }
+  function displayUsers() {
+    fetch('http://localhost:3000/N18/api/v1/list')
+      .then(response => response.json())
+      .then(customers => {
+        var userList = document.getElementById("danh-sach-nguoi-dung");
+        userList.innerHTML = "";
+        customers.forEach(function(user) {
+          var listItemInfo = document.createElement("div");
+          listItemInfo.classList.add("content__item-info")
+          var listItemButton = document.createElement("div");
+          listItemButton.classList.add("content__item-button")
+          var listItem = document.createElement("li");
+          listItem.classList.add("content__item");
+          var a = document.createElement('a');
+          a.classList.add("content__item-heading");
+          a.textContent = user.username;
+          a.setAttribute("value", user.username);
+          listItemInfo.appendChild(a);
+          listItem.appendChild(listItemInfo);
+          var iconButton1 = document.createElement('button');
+          var iconButton2 = document.createElement('button');
+          iconButton1.classList.add("content__icon-btn");
+          iconButton2.classList.add("content__icon-btn");
+          var iconEdit = document.createElement('i');
+          iconEdit.classList.add('fas','fa-edit');
+          iconEdit.classList.add('chinh-sua-nguoi-dung');
+          iconButton1.appendChild(iconEdit);
+          var iconDelete = document.createElement('i');
+          iconDelete.classList.add('fas','fa-trash');
+          iconDelete.classList.add('xoa-nguoi-dung');
+          iconButton2.appendChild(iconDelete);
+          listItemButton.appendChild(iconButton1);
+          listItemButton.appendChild(iconButton2);
+          listItem.appendChild(listItemButton);
+          userList.appendChild(listItem);
+        });
+      })
+      .catch(error => console.error('Error fetching users:', error));
   }
-    // Event delegation for editing users
+  //   // Event delegation for editing users
     document.getElementById("danh-sach-nguoi-dung").addEventListener("click", function(e) {
-      var users = JSON.parse(localStorage.getItem('users')) || [];
+      // var users = JSON.parse(localStorage.getItem('users')) || [];
       if (e.target && e.target.matches("i.chinh-sua-nguoi-dung")) {
         // Hiển thị form edit-user-form
         document.getElementById("edit-user-form").style.display = "block";
@@ -187,13 +226,30 @@ document.addEventListener("DOMContentLoaded", function() {
         var username = listItem.querySelector("a").getAttribute("value");
 
         // Lấy thông tin của người dùng từ localStorage
-        var userToEdit = users.find(function(user) {
-            return user.username === username;
-        });
+        // var userToEdit = users.find(function(user) {
+        //     return user.username === username;
+        // });
+        // Assume username is already defined
 
-        // Điền thông tin của người dùng vào các trường trong form
-        document.getElementById('edit-user-form').querySelector("input[name='email']").value = userToEdit.email;
-        document.getElementById('edit-user-form').querySelector("input[name='password']").value = userToEdit.password;
+
+        fetch(`http://localhost:3000/N18/api/v1/users/${username}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(user => {
+            // Do something with the user data
+            // Điền thông tin của người dùng vào các trường trong form
+
+            document.getElementById('edit-user-form').querySelector("input[name='email']").value = user.email;
+            console.log('User data:', user);
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+          });
+
 
         // Lắng nghe sự kiện submit của form
       var editUserForm = document.getElementById('edit-user-form');
@@ -201,30 +257,70 @@ document.addEventListener("DOMContentLoaded", function() {
           event.preventDefault(); // Ngăn chặn gửi form
 
           // Lấy thông tin chỉnh sửa từ các trường trong form
+          
           var emailEdit = document.getElementById('edit-user-form').querySelector("input[name='email']").value;
           var passwordEdit = document.getElementById('edit-user-form').querySelector("input[name='password']").value;
 
+          var customer = {
+            username: username,
+            email: emailEdit,
+            password: passwordEdit,
+            role: "user"
+          }
+
+          // Gửi yêu cầu PUT để cập nhật thông tin của người dùng
+          fetch('http://localhost:3000/N18/api/v1/edit/' + username, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customer)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Ẩn form chỉnh sửa người dùng
+                resetFormEdit();
+                document.getElementById("edit-user-form").style.display = "none";
+                modal.style.display = "none";
+                // Hiển thị lại danh sách người dùng sau khi chỉnh sửa
+                displayUsers();
+                console.log(customer);
+                // Thông báo thành công
+                alert('Sửa tài khoản user thành công!');
+            } else {
+                throw new Error('Failed to update user');
+            }
+        })
+        .catch(error => console.error('Error updating user:', error));
+        
+        function resetFormEdit(){
+          document.getElementById('edit-user-form').querySelector("input[name='email']").value = "";
+          document.getElementById('edit-user-form').querySelector("input[name='password']").value = "";
+        }
+
+        
+
           // Cập nhật thông tin của người dùng trong mảng users
-          users.forEach(function(user){
-              if(user.username === username){
-                user.username = username;
-                user.email = emailEdit;
-                user.password = passwordEdit;
-              }
-          });
+          // users.forEach(function(user){
+          //     if(user.username === username){
+          //       user.username = username;
+          //       user.email = emailEdit;
+          //       user.password = passwordEdit;
+          //     }
+          // });
 
           // Lưu lại thông tin đã cập nhật vào localStorage
-          localStorage.setItem('users', JSON.stringify(users));
+          // localStorage.setItem('users', JSON.stringify(users));
 
           // Ẩn form chỉnh sửa người dùng
-          document.getElementById("edit-user-form").style.display = "none";
-          modal.style.display = "none";
+          // document.getElementById("edit-user-form").style.display = "none";
+          // modal.style.display = "none";
 
           // Hiển thị lại danh sách người dùng sau khi chỉnh sửa
-          displayUsers();
+          // displayUsers();
           
           // Thông báo thành công
-          alert('Sửa tài khoản user thành công!');
+          // alert('Sửa tài khoản user thành công!');
 
           // Loại bỏ sự kiện submit sau khi đã xử lý
           editUserForm.removeEventListener("submit", submitHandler);
@@ -235,25 +331,31 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-      // Event delegation for deleting user
+  //     // Event delegation for deleting user
       document.getElementById("danh-sach-nguoi-dung").addEventListener("click", function(e) {
         var users = JSON.parse(localStorage.getItem('users')) || [];
         if (e.target && e.target.matches("i.xoa-nguoi-dung")) {
           var listItem = e.target.parentElement.parentElement.parentElement;
           var username = listItem.querySelector("a").getAttribute("value");
-          if (confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
-              users = users.filter(function(user) {
-                  return user.username !== username;
-              });
-              localStorage.setItem('users', JSON.stringify(users));
-              displayUsers();
+          var id= null;
+          
+        fetch('http://localhost:3000/N18/api/v1/delete/' + username, {
+          method: 'DELETE'
+          })
+        .then(response => {
+          if (response.ok) {
+            displayUsers(); // Reload user list after deletion
+          } else {
+            throw new Error('Failed to delete user');
           }
-        }
+        })
+        .catch(error => console.error('Error deleting user:', error));
+      }
     });
-
   // Display initial data
-  displayExams();
   displayUsers();
+  displayExams();
+  // displayUsers();
 
   // Function to add a new exam
   document.getElementById("them-ky-thi").addEventListener("click", function() {
@@ -311,35 +413,69 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     } else {
       // Get existing users from localStorage
-      var users = JSON.parse(localStorage.getItem('users')) || [];
+    //   var users = JSON.parse(localStorage.getItem('users')) || [];
 
-      var existingUser = users.find(function(user) {
-          return user.username === username;
-      });
+    //   var existingUser = users.find(function(user) {
+    //       return user.username === username;
+    //   });
 
-      if (!existingUser) {
-          var user = {
-              username: username,
-              email: email,
-              password: password,
-          };
-          // Add the new user to the existing users
-          users.push(user);
+    //   if (!existingUser) {
+    //       var user = {
+    //           username: username,
+    //           email: email,
+    //           password: password,
+    //       };
+    //       // Add the new user to the existing users
+    //       users.push(user);
 
-          // Save all users back to localStorage
-          localStorage.setItem('users', JSON.stringify(users));
+    //       // Save all users back to localStorage
+    //       localStorage.setItem('users', JSON.stringify(users));
 
+    //       alert('Thêm user thành công!');
+    //   } else {
+    //       alert('Username đã tồn tại!');
+    //   }
+    // }
+    // // Ẩn form sau khi hoàn thành nhập liệu
+    // document.getElementById('add-user-form').style.display = 'none';
+    // modal.style.display = "none";
+    // // Hiển thị danh sách người dùng sau khi thêm mới
+    // resetForm();
+    // Tạo object chứa dữ liệu người dùng
+    var userData = {
+      username: username,
+      email: email,
+      password: password,
+      role: "user"
+  };
+
+  // Gửi yêu cầu POST đến máy chủ để thêm người dùng mới
+  fetch('http://localhost:3000/N18/api/v1/register', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData) // Chuyển đổi object thành chuỗi JSON và gửi đi
+  })
+  .then(response => {
+      if (response.ok) {
+          // Nếu yêu cầu thành công, reload danh sách người dùng
+          displayUsers();
           alert('Thêm user thành công!');
       } else {
-          alert('Username đã tồn tại!');
+          // Nếu có lỗi, thông báo lỗi
+          throw new Error('Failed to add user');
       }
-    }
-    // Ẩn form sau khi hoàn thành nhập liệu
-    document.getElementById('add-user-form').style.display = 'none';
-    modal.style.display = "none";
-    // Hiển thị danh sách người dùng sau khi thêm mới
-    resetForm();
-    displayUsers();
+  })
+  .catch(error => console.error('Error adding user:', error))
+  .finally(() => {
+      // Ẩn form sau khi hoàn thành nhập liệu
+      document.getElementById('add-user-form').style.display = 'none';
+      modal.style.display = "none";
+      // Reset form
+      resetForm();
+  });
+}
     function resetForm(){
       document.querySelector("input[name='username']").value = "";
       document.querySelector("input[name='email']").value = "";
@@ -348,3 +484,52 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+
+
+
+
+
+// document.addEventListener("DOMContentLoaded",function(){
+
+//   // Event delegation for editing and deleting users
+//   document.getElementById("danh-sach-nguoi-dung").addEventListener("click", function(e) {
+//     if (e.target && e.target.nodeName === "LI") {
+//       var username = e.target.textContent;
+//       var action = prompt("Chọn hành động:\n1. Chỉnh sửa\n2. Xóa");
+//       if (action === "1") {
+//         var newUsername = prompt("Nhập tên mới:");
+//         if (newUsername) {
+//           fetch('http://localhost:3000/N18/api/v1/edit/' + customerId, {
+//             method: 'PUT',
+//             headers: {
+//               'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({ username: newUsername })
+//           })
+//           .then(response => {
+//             if (response.ok) {
+//               displayUsers(); // Reload user list after update
+//             } else {
+//               throw new Error('Failed to update user');
+//             }
+//           })
+//           .catch(error => console.error('Error updating user:', error));
+//         }
+//       } else if (action === "2") {
+//         if (confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
+//           fetch('http://localhost:3000/api/v1/delete/' + customerId, {
+//             method: 'DELETE'
+//           })
+//           .then(response => {
+//             if (response.ok) {
+//               displayUsers(); // Reload user list after deletion
+//             } else {
+//               throw new Error('Failed to delete user');
+//             }
+//           })
+//           .catch(error => console.error('Error deleting user:', error));
+//         }
+//       }
+//     }
+//   });
+// });

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="../../assets/css/dang-ky.css">   
+    <link rel="shortcut icon" href="https://portal.ptit.edu.vn/giaovu/wp-content/uploads/2016/05/favicon.png">
+</head>
+<body>
+    <div class="container">
+        <form id="registrationForm">
+            <h1>Đăng ký</h1>
+            <input type="text" placeholder="Tên người dùng" id="username" required>
+            <input type="password" placeholder="Mật khẩu" id="password" required>
+            <button type="submit">Đăng ký</button>
+            <p>Bạn đã có tài khoản? <a href="dang-nhap.html">Đăng nhập ngay</a></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn chặn gửi form mặc định
+
+            // Lấy giá trị từ các input
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var role = "user"; // Đây là giá trị cố định cho vai trò
+
+            // Tạo object chứa dữ liệu
+            var data = {
+                "username": username,
+                "password": password,
+                "role": role
+            };
+
+            // Gửi request POST đến máy chủ
+            fetch("http://localhost:8888/dat/v1/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json" // Đặt header Content-Type là JSON
+                },
+                body: JSON.stringify(data) // Chuyển đổi object thành JSON string trước khi gửi
+            })
+            .then(response => response.json()) // Chuyển đổi response thành JSON
+            .then(data => {
+                console.log(data); // Xử lý dữ liệu phản hồi từ máy chủ nếu cần
+                // Thực hiện các hành động khác sau khi đăng ký thành công
+            })
+            .catch(error => {
+                console.error('Error:', error); // Xử lý lỗi nếu có
+            });
+        });
+    </script>
+</body>
+</html>

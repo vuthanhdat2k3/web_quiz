@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+  event.preventDefault();
   var kyThiForm = document.getElementById("ky-thi-form");
   var cauHoiContainer = document.getElementById("cau-hoi-container");
   var index = document.querySelectorAll(".cau-hoi-input").length + 1;
@@ -46,17 +47,17 @@ document.addEventListener("DOMContentLoaded", function() {
   function createQuestionInput() {
     var cauHoiInput = document.createElement("div");
     cauHoiInput.classList.add("cau-hoi-input");
-
+  
     var label = document.createElement("label");
     label.textContent = "Câu hỏi " + index + ":";
     cauHoiInput.appendChild(label);
-
+  
     var cauHoiContentInput = document.createElement("input");
     cauHoiContentInput.setAttribute("type", "text");
     cauHoiContentInput.setAttribute("placeholder", "Nhập câu hỏi");
     cauHoiContentInput.classList.add("cau-hoi-content");
     cauHoiInput.appendChild(cauHoiContentInput);
-
+  
     // Tạo 4 input cho đáp án A, B, C, D
     var dapAnLabels = ["A", "B", "C", "D"];
     for (var i = 0; i < 4; i++) {
@@ -66,14 +67,14 @@ document.addEventListener("DOMContentLoaded", function() {
       dapAnInput.classList.add("dap-an-input");
       cauHoiInput.appendChild(dapAnInput);
     }
-
+  
     // Tạo phần nhập đáp án chính xác
     var dapAnDungInput = document.createElement("input");
     dapAnDungInput.setAttribute("type", "text");
     dapAnDungInput.setAttribute("placeholder", "Đáp án đúng là(ví dụ: A)");
     dapAnDungInput.classList.add("dap-an-dung");
     cauHoiInput.appendChild(dapAnDungInput);
-
+  
     // Tạo button xóa câu hỏi
     var xoaButton = document.createElement("button");
     xoaButton.textContent = "Xóa";
@@ -84,9 +85,12 @@ document.addEventListener("DOMContentLoaded", function() {
       saveFormState(); // Save form state after removing question
     });
     cauHoiInput.appendChild(xoaButton);
-
+  
+    index++; // Tăng số thứ tự câu hỏi sau khi thêm câu hỏi vào container
+  
     return cauHoiInput;
   }
+  
 
   function saveFormState() {
     var formState = {
