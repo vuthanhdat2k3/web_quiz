@@ -8,22 +8,27 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+var submitted = false;
+
 function searchExam() {
   event.preventDefault();
-  var input = document.getElementById('searchInput').value.toUpperCase().trim();
-  var filter = document.getElementById('statusFilter').value.toUpperCase();
-  var ul = document.getElementById('list-exam');
-  var a = ul.getElementsByTagName('a');
-  console.log(input);
-  for (var i = 0; i < a.length; i++) {
-      var h4 = a[i].getElementsByTagName("h4")[0];
-      var txtValue = h4.textContent || h4.innerText;
-      if (txtValue.toUpperCase().indexOf(input) > -1 && (filter == "ALL" || a[i].getAttribute("value").toUpperCase() == filter)) {
-          a[i].style.display = "";
-      } else {
-          a[i].style.display = "none";
-      }
+  if(submitted){
+    return;
   }
+  var input = document.getElementById('searchInput').value.toUpperCase().trim();
+    var filter = document.getElementById('statusFilter').value.toUpperCase();
+    var ul = document.getElementById('list-exam');
+    var a = ul.getElementsByTagName('a');
+    console.log(input);
+    for (var i = 0; i < a.length; i++) {
+        var h4 = a[i].getElementsByTagName("h4")[0];
+        var txtValue = h4.textContent || h4.innerText;
+        if (txtValue.toUpperCase().indexOf(input) > -1 && (filter == "ALL" || a[i].getAttribute("value").toUpperCase() == filter)) {
+            a[i].style.display = "";
+        } else {
+            a[i].style.display = "none";
+        }
+    }
 };
 
 // var countdownElement = document.getElementById('countdown');
@@ -89,6 +94,46 @@ const currentExamId = localStorage.getItem('currentExamId'); // Thay vì lấy c
 const currentExamTime = localStorage.getItem('currentExamTime');
 var exam = [];
 const main = document.querySelector('main');
+var contest = {
+  userId: parseInt(localStorage.getItem('userId')),
+  fullName: "",
+  maSV: "",
+  score: 0,
+  examName: localStorage.getItem("currentExamName")
+}
+
+//Tao contest
+fetch('http://localhost:3000/api/v1/createContest', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(contest) // Chuyển đổi object thành chuỗi JSON và gửi đi
+    })
+  .then(response => {
+    if (response.ok) {
+        return response.json(); // Chuyển đổi phản hồi thành JSON
+    } else {
+        // Nếu có lỗi, thông báo lỗi
+        throw new Error('Failed to create contest');
+    }
+  })
+  .then(data =>{
+    // Kiểm tra xem data có thuộc tính contestId không
+    if (data && data.contestId) {
+        // Lưu contestId từ dữ liệu nhận được vào localStorage
+        localStorage.setItem("contestId", data.contestId);
+    } else {
+        throw new Error('ContestId not found in response data');
+    }
+  })
+  .catch(error => console.error('Error creating contest:', error))
+  .finally(() => {
+    // Thực hiện các hành động cuối cùng (nếu có)
+  });
+
+
+
 
 // Gửi yêu cầu AJAX để lấy danh sách câu hỏi từ cơ sở dữ liệu
 fetch(`http://localhost:3000/api/v1/exams2/${currentExamId}`) // Sử dụng examId để lấy danh sách câu hỏi
@@ -169,6 +214,8 @@ startTimer();
   console.error('Error fetching questions:', error);
   main.innerHTML = "<p>Có lỗi xảy ra khi tải câu hỏi.</p>";
 });
+
+
 function checkAnswer() {
   var correctAnswers = 0;
   var userAnswers = [];
@@ -196,8 +243,9 @@ function checkAnswer() {
   var result = {
     totalQuestions: exam.cauHoi.length,
     correctAnswers: correctAnswers,
-    point: (correctAnswers / exam.cauHoi.length) * 100,
+    point: parseFloat((correctAnswers / exam.cauHoi.length) * 10).toFixed(2),
   };
+  contest.score = result.point;
   console.log(userAnswers[0]);
 
   userAnswers.forEach((userAnswer) => {
@@ -232,6 +280,9 @@ function validateCandidateInfo() {
       alert("Vui lòng nhập đủ thông tin thí sinh.");
       return false;
   }
+  contest.fullName = fullname;
+  contest.maSV = studentId;
+  contest.examName = localStorage.getItem("currentExamName");
   candidate = {
     hoTen: fullname,
     maSv: studentId,
@@ -241,13 +292,36 @@ function validateCandidateInfo() {
   return true;
 }
 
+
 function submitExam() {
   if (!validateCandidateInfo()) {
     return; // Dừng hàm nếu thông tin thí sinh không hợp lệ
   } else {
     const result = JSON.stringify(checkAnswer());
     localStorage.setItem("result", result);
-    // window.location.href= "../../assets/features/trang-ket-qua.html";
+    var contestId = parseInt(localStorage.getItem("contestId"));
+    // submitted = true;
+    fetch(`http://localhost:3000/api/v1/updateContest/${contestId}`,{
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(contest) // Chuyển đổi object thành chuỗi JSON và gửi đi
+      })
+    .then(response => {
+      if (response.ok) {
+          return response.json(); // Chuyển đổi phản hồi thành JSON
+      } else {
+          // Nếu có lỗi, thông báo lỗi
+          throw new Error('Failed to create contest');
+      }
+    })
+    .catch(error => console.error('Error creating contest:', error))
+    .finally(() => {
+      // Thực hiện các hành động cuối cùng (nếu có)
+    });
+    window.location.href= "../../assets/features/trang-ket-qua.html";
+    
   }
   
 }
@@ -307,12 +381,13 @@ function displayExams() {
               var h4 = document.createElement('h4');
               h4.textContent = exam.examName;
 
-              // Thêm sự kiện click để lưu tên kỳ thi vào localStorage
-              h4.addEventListener("click", function() {
-                  localStorage.setItem("currentExamId", exam.examId);
-                  localStorage.setItem("currentExamTime", exam.time);
-                  localStorage.setItem("currentExamName", exam.examName);
-              });
+
+              //Thêm sự kiện click để lưu tên kỳ thi vào localStorage
+                h4.addEventListener("click", function() {
+              localStorage.setItem("currentExamId", exam.examId);
+              localStorage.setItem("currentExamTime", exam.time);
+              localStorage.setItem("currentExamName", exam.examName);
+            });
 
               var p1 = document.createElement('p');
               p1.textContent = "Thời gian: " + exam.time + " phút";

@@ -9,7 +9,7 @@ function getSummary() {
     var result = JSON.parse(localStorage.getItem("result"));
     correctAnswers = result.correctAnswers; // Số câu trả lời đúng
     totalQuestions = result.totalQuestions; // Tổng số câu
-    point = result.point;
+    point = parseFloat(result.point).toFixed(2);
 }
 
 function getInfo(){
@@ -39,54 +39,86 @@ var selectedUser = localStorage.getItem('selectedUser');
 
 function reviewAnswers() {
     if (!answerShown) { // Kiểm tra xem đáp án đã được hiển thị chưa
-        const exams = JSON.parse(localStorage.getItem('exams'));
-        const currentExam = localStorage.getItem('currentExam');
+      const currentExamId = localStorage.getItem('currentExamId');
+      fetch(`http://localhost:3000/api/v1/exams2/${currentExamId}`) // Sử dụng examId để lấy danh sách câu hỏi
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch questions');
+        }
+        return response.json();
+      })
+      .then(questions => {
+        // const exams = JSON.parse(localStorage.getItem('exams'));
+        // const currentExam = localStorage.getItem('currentExam');
         
-        // Tìm bài thi hiện tại trong mảng exams
-        const currentExamData = exams.find(exam => exam.tenKyThi === currentExam);
+        // // Tìm bài thi hiện tại trong mảng exams
+        // const currentExamData = exams.find(exam => exam.tenKyThi === currentExam);
         
         // Lấy phần tử section.question để chèn câu hỏi vào
         const questionSection = document.querySelector('.detail-answer');   
         
         // Hiển thị câu hỏi và đáp án
-        currentExamData.cauHoi.forEach((question, index) => {
+        questions.forEach((question, index) => {
             const questionDiv = document.createElement('div');
             questionDiv.classList.add("question");
-            questionDiv.innerHTML = `<p class = "question-heading"><b>Câu hỏi ${index + 1}:</b> ${question.question}</p>`;
+            questionDiv.innerHTML = `<p class = "question-heading"><b>Câu hỏi ${index + 1}:</b> ${question.content}</p>`;
             
             // Hiển thị 4 đáp án và đáp án đúng
             const answersDiv = document.createElement('div');
             answersDiv.classList.add("answer");
-            question.answers.forEach((answer, i) => {
-                const answerDiv = document.createElement('div');
-                answerDiv.classList.add("answer-item");
-                const answerInput = document.createElement('input');
-                const answerLabel = document.createElement('label');
-                answerInput.type = 'radio';
-                answerInput.name = `answer${index}`;
-                answerInput.value = String.fromCharCode(65 + i);
-                if(answerInput.value === selectedUser[2 * index]) {
-                  answerInput.checked = true;
-                  if(answerInput.value === question.correctAnswer){
-                    answerLabel.style.color = "green";
-                  }
-                  else{
-                    answerLabel.style.color = "red";
-                  }
+            for(var i = 0 ; i < 4 ; i++){
+              const answerDiv = document.createElement('div');
+              answerDiv.classList.add("answer-item");
+              const answerInput = document.createElement('input');
+              const answerLabel = document.createElement('label');
+              answerInput.type = 'radio';
+              answerInput.name = `answer${index}`;
+              answerInput.value = String.fromCharCode(65 + i);
+              if(answerInput.value === selectedUser[2 * index]) {
+                answerInput.checked = true;
+                if(answerInput.value === question.optionCorrect){
+                  answerLabel.style.color = "green";
                 }
-                answerLabel.appendChild(answerInput);
-                answerLabel.appendChild(document.createTextNode(answer));
-                answerDiv.appendChild(answerLabel);
-                // answerDiv.innerHTML = <label><input type="radio" name="answer${index}" value="${String.fromCharCode(65 + i)}"> ${answer}</label>;
-                answersDiv.appendChild(answerDiv);
+                else{
+                  answerLabel.style.color = "red";
+                }
+              }
+              answerLabel.appendChild(answerInput);
+              answerLabel.appendChild(document.createTextNode(` ${question[`option${String.fromCharCode(65 + i)}`]}`));
+              answerDiv.appendChild(answerLabel);
+              // answerDiv.innerHTML = <label><input type="radio" name="answer${index}" value="${String.fromCharCode(65 + i)}"> ${answer}</label>;
+              answersDiv.appendChild(answerDiv);
+            }
+            // question.answers.forEach((answer, i) => {
+            //     const answerDiv = document.createElement('div');
+            //     answerDiv.classList.add("answer-item");
+            //     const answerInput = document.createElement('input');
+            //     const answerLabel = document.createElement('label');
+            //     answerInput.type = 'radio';
+            //     answerInput.name = `answer${index}`;
+            //     answerInput.value = String.fromCharCode(65 + i);
+            //     if(answerInput.value === selectedUser[2 * index]) {
+            //       answerInput.checked = true;
+            //       if(answerInput.value === question.correctAnswer){
+            //         answerLabel.style.color = "green";
+            //       }
+            //       else{
+            //         answerLabel.style.color = "red";
+            //       }
+            //     }
+            //     answerLabel.appendChild(answerInput);
+            //     answerLabel.appendChild(document.createTextNode(answer));
+            //     answerDiv.appendChild(answerLabel);
+            //     // answerDiv.innerHTML = <label><input type="radio" name="answer${index}" value="${String.fromCharCode(65 + i)}"> ${answer}</label>;
+            //     answersDiv.appendChild(answerDiv);
 
                 
-            });
+            // });
             questionDiv.appendChild(answersDiv);
             
             const correctAnswerDiv = document.createElement('div')
             correctAnswerDiv.classList.add("answer-correct");
-            correctAnswerDiv.innerHTML = `<p>Đáp án đúng: ${question.correctAnswer}</p>`;
+            correctAnswerDiv.innerHTML = `<p>Đáp án đúng: ${question.optionCorrect}</p>`;
             questionDiv.appendChild(correctAnswerDiv);
             
             questionSection.appendChild(questionDiv);
@@ -94,5 +126,10 @@ function reviewAnswers() {
         });
 
         answerShown = true; // Đặt biến answerShown thành true để chỉ hiển thị một lần duy nhất
+      })
+      .catch(error => {
+        console.error('Error fetching questions:', error);
+        main.innerHTML = "<p>Có lỗi xảy ra khi tải câu hỏi.</p>";
+      });
     }
 }

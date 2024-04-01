@@ -18,10 +18,13 @@
 
     <main>
         <form id="ky-thi-form">
-            <div class="form-group">
-                <label for="ten-ky-thi">Tên kỳ thi:</label>
-                <input type="text" id="ten-ky-thi" name="ten-ky-thi" required>
-            </div>
+          <div class="form-group">
+            <label for="ten-ky-thi">Tên kỳ thi:</label>
+            <input type="text" id="ten-ky-thi" name="ten-ky-thi" required>
+            <div id="exam-error" class="error-message-exam">
+              Tên kỳ thi đã tồn tại!
+            </div> 
+          </div>
             <div class="form-group">
                 <label for="thoi-gian">Thời gian(phút):</label>
                 <input type="number" id="thoi-gian" name="thoi-gian" required>

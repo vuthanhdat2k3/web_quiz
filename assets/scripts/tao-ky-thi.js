@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var kyThiForm = document.getElementById("ky-thi-form");
   var cauHoiContainer = document.getElementById("cau-hoi-container");
   var index = document.querySelectorAll(".cau-hoi-input").length + 1;
-
+  var error = document.getElementById("exam-error");
   kyThiForm.addEventListener("submit", function(e) {
       e.preventDefault(); // Prevent default form submission
 
@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (response.ok) {
             return response.json();
         } else {
+          error.style.display = "block";
             throw new Error('Failed to create exam');
         }
     })
@@ -90,9 +91,11 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(response => {
                 if (response.ok) {
+                  resetForm();
                 } else {
                     // Nếu có lỗi, thông báo lỗi
                     throw new Error('Failed to add user');
+                    
                 }
             })
             .catch(error => console.error('Error adding user:', error))
@@ -254,6 +257,7 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("ten-ky-thi").value = "";
       document.getElementById("thoi-gian").value = "";
       document.getElementById("loai-ky-thi").value = "";
+      error.style.display = "none";
     }
     
   });
@@ -264,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("loai-ky-thi").value = "";
       cauHoiContainer.innerHTML = ""; // Clear danh sách câu hỏi
       index = 1; // Reset lại số thứ tự câu hỏi
+      error.style.display = "none";
   }
 });
 
