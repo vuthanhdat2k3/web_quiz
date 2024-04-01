@@ -21,6 +21,7 @@ form.addEventListener("submit", (event) => {
       alert("Tên đăng nhập hoặc mật khẩu không chính xác!");
     }
     else{
+      localStorage.setItem("static","true");
       window.location.href= "../../assets/features/dashboard-admin.html";
     }
 });

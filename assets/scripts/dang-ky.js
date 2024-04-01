@@ -86,6 +86,7 @@
 const form = document.getElementById("registrationForm");
 const usernameInput = form.querySelector("input[name='username']");
 const usernameError = document.getElementById("username-error");
+const passwordError = document.getElementById("password-error");
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -93,9 +94,15 @@ form.addEventListener("submit", async (event) => {
     const username = form.querySelector("input[name='username']").value;
     const email = form.querySelector("input[name='email']").value;
     const password = form.querySelector("input[name='password']").value;
+    const confirmPassword = form.querySelector("input[name='confirm_password']").value;
+
+    if (password !== confirmPassword) {
+        passwordError.style.display = "block";
+        return;
+    }
 
     try {
-        const response = await fetch('http://localhost:3000/N18/api/v1/register', {
+        const response = await fetch('http://localhost:3000/api/v1/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -108,8 +115,8 @@ form.addEventListener("submit", async (event) => {
             console.log('Đăng ký thành công');
 
             const responseData = await response.json();
-            const token = responseData.token;
-            localStorage.setItem('token', token);
+            // const token = responseData.token;
+            // localStorage.setItem('token', token);
 
             // Chuyển hướng đến trang đăng nhập
             window.location.href="dang-nhap.html";

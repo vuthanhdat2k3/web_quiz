@@ -21,37 +21,88 @@ document.addEventListener("DOMContentLoaded", function() {
           var dapAnArray = Array.from(dapAnInputs).map(function(dapAnInput) {
               return dapAnInput.value;
           });
-          return { question: cauHoiContent, answers: dapAnArray, correctAnswer: correctAnswer};
+          return { content: cauHoiContent, answers: dapAnArray, optionCorrect: correctAnswer};
       });
+
 
       
 
       // Get existing exams from localStorage
-      var exams = JSON.parse(localStorage.getItem("exams")) || [];
+      // var exams = JSON.parse(localStorage.getItem("exams")) || [];
 
-      var existingExam = exams.find(function(exam) {
-        return exam.tenKyThi === tenKyThi;
-      });
+      // var existingExam = exams.find(function(exam) {
+      //   return exam.tenKyThi === tenKyThi;
+      // });
 
-      if (!existingExam) {
         // Construct exam object
         var exam = {
-          tenKyThi: tenKyThi,
-          thoiGian: thoiGian,
-          loaiKyThi: loaiKyThi,
-          cauHoi: cauHoiArray
+          examName: tenKyThi,
+          time: parseInt(thoiGian),
+          type: loaiKyThi
         };
-        // Add the new exam to the existing exams
-        exams.push(exam);
-        // Save all exams back to localStorage
-        localStorage.setItem("exams", JSON.stringify(exams));
+        // // Add the new exam to the existing exams
+        // exams.push(exam);
+        // // Save all exams back to localStorage
+        // localStorage.setItem("exams", JSON.stringify(exams));
 
-        alert('Dữ liệu câu hỏi và đáp án đã được lưu vào localStorage.');
-        // Clear form fields
-        resetForm();
-      } else {
-        alert('Tên kỳ thi đã tồn tại!');
-      }
+        // alert('Dữ liệu câu hỏi và đáp án đã được lưu vào localStorage.');
+        // // Clear form fields
+        // resetForm();
+        
+        // Gửi yêu cầu POST để tạo mới kỳ thi
+      fetch('http://localhost:3000/api/v1/createExam', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(exam)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Failed to create exam');
+        }
+    })
+    .then(data => {
+        console.log('Exam created:', data);
+        // Lấy id của kỳ thi mới được tạo
+        var examId = data.examId;
+        console.log('Exam ID:', examId);
+
+        for(var i = 0 ; i < cauHoiArray.length ; i++){
+            var question = {
+              content: cauHoiArray[i].content,
+              optionA: cauHoiArray[i].answers[0],
+              optionB: cauHoiArray[i].answers[1],
+              optionC: cauHoiArray[i].answers[2],
+              optionD: cauHoiArray[i].answers[3],
+              optionCorrect: cauHoiArray[i].optionCorrect,
+              examId: examId,
+            }
+
+            fetch('http://localhost:3000/api/v1/createQuestion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(question) // Chuyển đổi object thành chuỗi JSON và gửi đi
+            })
+            .then(response => {
+                if (response.ok) {
+                } else {
+                    // Nếu có lỗi, thông báo lỗi
+                    throw new Error('Failed to add user');
+                }
+            })
+            .catch(error => console.error('Error adding user:', error))
+            .finally(() => {
+            });
+
+
+        }
+        
+      })
   });
 
   // Thêm sự kiện cho button "Thêm câu hỏi"
@@ -113,7 +164,13 @@ document.addEventListener("DOMContentLoaded", function() {
     var tenKyThi = document.getElementById("ten-ky-thi").value.toUpperCase();
     var thoiGian = document.getElementById("thoi-gian").value;
     var loaiKyThi = document.getElementById("loai-ky-thi").value;
-  
+    var exam = {
+      examName: tenKyThi,
+      time: parseInt(thoiGian),
+      type: loaiKyThi
+    };
+    
+
     reader.onload = function(e) {
       var data = new Uint8Array(e.target.result);
       var workbook = XLSX.read(data, { type: 'array' });

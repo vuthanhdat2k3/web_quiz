@@ -81,3 +81,13 @@ body {
   font-size: 14px; /* Kích thước chữ */
   display: none; /* Mặc định ẩn đi */
 }
+
+.error-message-password {
+  color: red; /* Màu chữ */
+  background-color: #ffe6e6; /* Màu nền */
+  padding: 5px 10px; /* Khoảng cách lề bên trong */
+  margin-top: 5px; /* Khoảng cách lề trên */
+  font-size: 14px; /* Kích thước chữ */
+  display: none; /* Mặc định ẩn đi */
+}
+

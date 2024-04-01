@@ -33,15 +33,18 @@
 // });
 
 const form = document.querySelector("form");
+const passwordError = document.getElementById("password-error");
+
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const username = form.querySelector("input[name='username']").value;
     const password = form.querySelector("input[name='password']").value;
+    
 
     try {
-        const response = await fetch('http://localhost:3000/N18/api/v1/login', {
+        const response = await fetch('http://localhost:3000/api/v1/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,11 +57,13 @@ form.addEventListener("submit", async (event) => {
             const responseData = await response.json();
             console.log(responseData); // Handle the response data as needed
             // Redirect the user to the next page or perform other actions
+            localStorage.setItem('static',"true");
+            localStorage.setItem('userId', responseData.userId);
             window.location.href="../../assets/features/trang-user.html";
         } else {
             // Login failed
             console.error('Login failed:', response.statusText);
-            // Handle the error, display a message to the user, etc.
+            passwordError.style.display = 'block';
         }
     } catch (error) {
         console.error('Error during login:', error);

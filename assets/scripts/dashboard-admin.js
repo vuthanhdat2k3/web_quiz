@@ -53,71 +53,105 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Display exams
   function displayExams() {
-    var examList = document.getElementById("danh-sach-ky-thi");
-    examList.innerHTML = "";
-    exams.forEach(function(exam) {
-      var listItemInfo = document.createElement("div");
-      listItemInfo.classList.add("content__item-info")
-      var listItemButton = document.createElement("div");
-      listItemButton.classList.add("content__item-button")
-      var listItem = document.createElement("li");
-      listItem.classList.add("content__item");
-      var a = document.createElement('a');
-      a.classList.add("content__item-heading");
-      a.textContent = exam.tenKyThi;
-      a.setAttribute("value", exam.tenKyThi);
-      listItemInfo.appendChild(a);
-      var p1 = document.createElement('p');
-      p1.textContent = "Thời Gian: " + exam.thoiGian + " phút.";
-      listItemInfo.appendChild(p1);
-      var p2 = document.createElement('p');
-      p2.textContent = "Loại: " + exam.loaiKyThi;
-      listItemInfo.appendChild(p2);
-      listItem.appendChild(listItemInfo);
-      var iconButton1 = document.createElement('button');
-      var iconButton2 = document.createElement('button');
-      iconButton1.classList.add("content__icon-btn");
-      iconButton2.classList.add("content__icon-btn");
-      var iconEdit = document.createElement('i');
-      iconEdit.classList.add('fas','fa-edit');
-      iconEdit.classList.add('chinh-sua-ky-thi');
-      iconButton1.appendChild(iconEdit);
-      var iconDelete = document.createElement('i');
-      iconDelete.classList.add('fas','fa-trash');
-      iconDelete.classList.add('xoa-ky-thi');
-      iconButton2.appendChild(iconDelete);
-      listItemButton.appendChild(iconButton1);
-      listItemButton.appendChild(iconButton2);
-      listItem.appendChild(listItemButton);
-      examList.appendChild(listItem);
 
-      // Add click event listener to highlight selected exam
-      listItem.addEventListener("click", function() {
-        // Remove the "selected" class from all exam items
-        examList.querySelectorAll("li").forEach(function(item) {
-            item.classList.remove("selected");
+    fetch('http://localhost:3000/api/v1/listExam',{
+      method:'GET'
+    })
+    .then(response => {
+      if(response.ok){
+        return response.json();
+      }else{
+        throw new Error('Failed to fetch exams!');
+      }
+    })
+    .then(exams => {
+      var examList = document.getElementById("danh-sach-ky-thi");
+      examList.innerHTML = "";
+      exams.forEach(function(exam) {
+        var listItemInfo = document.createElement("div");
+        listItemInfo.classList.add("content__item-info")
+        var listItemButton = document.createElement("div");
+        listItemButton.classList.add("content__item-button")
+        var listItem = document.createElement("li");
+        listItem.classList.add("content__item");
+        var a = document.createElement('a');
+        a.classList.add("content__item-heading");
+        a.textContent = exam.examName;
+        a.setAttribute("value", exam.examName);
+        listItemInfo.appendChild(a);
+        var p1 = document.createElement('p');
+        p1.textContent = "Thời Gian: " + exam.time + " phút.";
+        listItemInfo.appendChild(p1);
+        var p2 = document.createElement('p');
+        p2.textContent = "Loại: " + exam.type;
+        listItemInfo.appendChild(p2);
+        listItem.appendChild(listItemInfo);
+        var iconButton1 = document.createElement('button');
+        var iconButton2 = document.createElement('button');
+        iconButton1.classList.add("content__icon-btn");
+        iconButton2.classList.add("content__icon-btn");
+        var iconEdit = document.createElement('i');
+        iconEdit.classList.add('fas','fa-edit');
+        iconEdit.classList.add('chinh-sua-ky-thi');
+        iconButton1.appendChild(iconEdit);
+        var iconDelete = document.createElement('i');
+        iconDelete.classList.add('fas','fa-trash');
+        iconDelete.classList.add('xoa-ky-thi');
+        iconButton2.appendChild(iconDelete);
+        listItemButton.appendChild(iconButton1);
+        listItemButton.appendChild(iconButton2);
+        listItem.appendChild(listItemButton);
+        examList.appendChild(listItem);
         });
+    })
+    .catch(error => console.error('Error fetching exams:', error));
 
-        // Highlight the selected exam
-        this.classList.add("selected");
-      });
-    });
+    //   // Add click event listener to highlight selected exam
+    //   listItem.addEventListener("click", function() {
+    //     // Remove the "selected" class from all exam items
+    //     examList.querySelectorAll("li").forEach(function(item) {
+    //         item.classList.remove("selected");
+    //     });
+
+    //     // Highlight the selected exam
+    //     this.classList.add("selected");
+    //   });
+    // });
   }
   // Event delegation for edit exams
   document.getElementById("danh-sach-ky-thi").addEventListener("click", function(e) {
-    var exams = JSON.parse(localStorage.getItem('exams')) || [];
     console.log(e.target);
     if (e.target && e.target.matches("i.chinh-sua-ky-thi")) {
       var listItem = e.target.parentElement.parentElement.parentElement;
       console.log(listItem);
-      var tenKyThi = listItem.querySelector(".content__item-heading").getAttribute("value");
-      console.log(tenKyThi);
-      // Lấy thông tin của exam từ localStorage
-      var examToEdit = exams.find(function(exam) {
-          return exam.tenKyThi === tenKyThi;
-      });
+      var examName = listItem.querySelector(".content__item-heading").getAttribute("value");
+      console.log(examName);
+      // // Lấy thông tin của exam từ localStorage
+      // var examToEdit = exams.find(function(exam) {
+      //     return exam.tenKyThi === tenKyThi;
+      // });
 
-      localStorage.setItem('examToEdit', JSON.stringify(examToEdit));
+      fetch(`http://localhost:3000/api/v1/exams/${examName}`, {
+          method: 'GET'
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(exam => {
+            // Do something with the user data
+            // Điền thông tin của người dùng vào các trường trong form
+
+            localStorage.setItem("editExamId", exam[0].examId);
+            console.log('User data:', exam);
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+          });
+
+      // localStorage.setItem('examToEdit', JSON.stringify(examToEdit));
       window.location.href = "chinh-sua-ky-thi.html";
     }
   });
@@ -126,14 +160,19 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("danh-sach-ky-thi").addEventListener("click", function(e) {
       if (e.target && e.target.matches("i.xoa-ky-thi")) {
           var listItem = e.target.parentElement.parentElement.parentElement;
-          var tenKyThi = listItem.querySelector(".content__item-heading").getAttribute("value");
-          if (confirm("Bạn có chắc chắn muốn xóa kỳ thi này không?")) {
-              exams = exams.filter(function(exam) {
-                  return exam.tenKyThi !== tenKyThi;
-              });
-              localStorage.setItem('exams', JSON.stringify(exams));
-              displayExams();
+          var examName = listItem.querySelector(".content__item-heading").getAttribute("value");
+          console.log(examName)
+          fetch('http://localhost:3000/api/v1/deleteExam/' + examName, {
+          method: 'DELETE'
+          })
+        .then(response => {
+          if (response.ok) {
+            displayExams(); // Reload user list after deletion
+          } else {
+            throw new Error('Failed to delete user');
           }
+        })
+        .catch(error => console.error('Error deleting user:', error));
       }
   });
   
@@ -175,9 +214,19 @@ document.addEventListener("DOMContentLoaded", function() {
   //     userList.appendChild(listItem);
   //   });
   // }
+
   function displayUsers() {
-    fetch('http://localhost:3000/N18/api/v1/list')
-      .then(response => response.json())
+    
+    fetch('http://localhost:3000/api/v1/listUser',{
+      method: 'GET'
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to fetch users');
+        }
+      })
       .then(customers => {
         var userList = document.getElementById("danh-sach-nguoi-dung");
         userList.innerHTML = "";
@@ -232,7 +281,9 @@ document.addEventListener("DOMContentLoaded", function() {
         // Assume username is already defined
 
 
-        fetch(`http://localhost:3000/N18/api/v1/users/${username}`)
+        fetch(`http://localhost:3000/api/v1/users/${username}`, {
+          method: 'GET'
+        })
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -269,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
           // Gửi yêu cầu PUT để cập nhật thông tin của người dùng
-          fetch('http://localhost:3000/N18/api/v1/edit/' + username, {
+          fetch('http://localhost:3000/api/v1/edit/' + username, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -339,7 +390,7 @@ document.addEventListener("DOMContentLoaded", function() {
           var username = listItem.querySelector("a").getAttribute("value");
           var id= null;
           
-        fetch('http://localhost:3000/N18/api/v1/delete/' + username, {
+        fetch('http://localhost:3000/api/v1/delete/' + username, {
           method: 'DELETE'
           })
         .then(response => {
@@ -450,7 +501,7 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   // Gửi yêu cầu POST đến máy chủ để thêm người dùng mới
-  fetch('http://localhost:3000/N18/api/v1/register', {
+  fetch('http://localhost:3000/api/v1/register', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
